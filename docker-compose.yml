@@ -1,0 +1,20 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "5552:5552"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbitmq_stream advertised_host localhost"
+
+    configs:
+      - source: plugins
+        target: /etc/rabbitmq/enabled_plugins
+
+configs:
+  plugins:
+    content: "[rabbitmq_management, rabbitmq_mqtt]."
